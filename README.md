@@ -63,11 +63,11 @@ $customer = new Customers();
 $customer->getById('ERF78SDF0980...');
 
 # ou através de chamada de forma anônima:
-(new Patient())getById('ERF78SDF0980...');
+(new Customers())->getById('ERF78SDF0980...');
 ```
 
 Todas as classes possuem assinaturas que remetem aos métodos documentados no site oficial da
-API (https://apidocs.conexasaude.com.br/v1/enterprise/index.html).
+API ([https://dev.iugu.com/reference/introdução-a-api](https://https://dev.iugu.com/reference/introdução-a-api)).
 
 ## Objetos de Tipos
 

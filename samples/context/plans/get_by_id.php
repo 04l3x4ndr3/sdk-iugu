@@ -15,10 +15,35 @@ if (!empty($_SERVER['QUERY_STRING'])) {
         die($e->getMessage());
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        $plans = new Plans($config);
+        $oPlan = new Plan();
+        $id = $_GET['id'];
+
+        $oPlan->setName($_POST['name'] ?? null)
+            ->setIdentifier($_POST['identifier'] ?? null)
+            ->setInterval($_POST['interval'] ?? null)
+            ->setIntervalType($_POST['interval_type'] ?? null)
+            ->setValueCents($_POST['value_cents'] ?? null)
+            ->setPayableWith($_POST['payable_with'] ?? null)
+            ->setBillingDays($_POST['billing_days'] ?? null)
+            ->setMaxCycles($_POST['max_cycles'] ?? null)
+            ->setInvoiceMaxInstallments($_POST['invoice_max_installments'] ?? null);
+
+        $resp = $plans->edit($id, $oPlan);
+
+        header("location: get_by_id.php?id=" . $resp->id);
+    } catch (\Exception|GuzzleException $e) {
+        die($e->getMessage());
+    }
+}
+
 ?>
 <html lang="pt-br">
 <body>
-<form method="post">
+<form method="post" action="?id=<?php echo $data->id ?? null; ?>">
     <table style="width: 100%;">
         <tr>
             <td style="width: 25%">Nome do plano</td>
@@ -56,13 +81,13 @@ if (!empty($_SERVER['QUERY_STRING'])) {
             <td>Método de pagamento</td>
             <td>
                 <select multiple name="payable_with[]">
-                    <option value="credit_card" <?php echo (!empty($data->payable_with) && in_array('credit_card', $data->payable_with)) ? 'selected' : ''; ?>>
+                    <option value="credit_card" <?php echo (!empty($data->payable_with) && (is_array($data->payable_with) && in_array('credit_card', $data->payable_with)) || $data->payable_with == 'credit_card') ? 'selected' : ''; ?>>
                         Cartão de crédito
                     </option>
-                    <option value="bank_slip" <?php echo (!empty($data->payable_with) && in_array('bank_slip', $data->payable_with)) ? 'selected' : ''; ?>>
+                    <option value="bank_slip" <?php echo (!empty($data->payable_with) && (is_array($data->payable_with) && in_array('bank_slip', $data->payable_with)) || $data->payable_with == 'bank_slip') ? 'selected' : ''; ?>>
                         Boleto
                     </option>
-                    <option value="pix" <?php echo (!empty($data->payable_with) && in_array('pix', $data->payable_with)) ? 'selected' : ''; ?>>
+                    <option value="pix" <?php echo (!empty($data->payable_with) && ((is_array($data->payable_with) && in_array('pix', $data->payable_with)) || $data->payable_with == 'pix')) ? 'selected' : ''; ?>>
                         Pix
                     </option>
                 </select>
@@ -90,7 +115,8 @@ if (!empty($_SERVER['QUERY_STRING'])) {
                     será o que está configurado na conta.
                 </small>
             </td>
-            <td><input type="number" name="invoice_max_installments" min="1" max="12" value="<?php echo $data->invoice_max_installments ?? null; ?>"></td>
+            <td><input type="number" name="invoice_max_installments" min="1" max="12"
+                       value="<?php echo $data->invoice_max_installments ?? null; ?>"></td>
         </tr>
     </table>
     <input type="submit" value="Salvar">

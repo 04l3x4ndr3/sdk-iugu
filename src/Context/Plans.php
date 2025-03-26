@@ -3,8 +3,8 @@
 namespace O4l3x4ndr3\SdkIugu\Context;
 
 use GuzzleHttp\Exception\GuzzleException;
-use O4l3x4ndr3\SdkIugu\Helpers\HTTPClient;
 use O4l3x4ndr3\SdkIugu\Configuration;
+use O4l3x4ndr3\SdkIugu\Utils\HTTPClient;
 use O4l3x4ndr3\SdkIugu\Types\Plan;
 
 class Plans extends HTTPClient

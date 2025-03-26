@@ -28,7 +28,6 @@ Os arquivos estão organizados por diretórios conforme abaixo:
 
 Instale o pacote via **composer** utilizando o comando ```composer require o4l3x4ndr3/sdk-iugu```.
 
-
 ### Utilizando arquivo .htaccess
 
 Utilizando o arquivo ```.htaccess``` da sua aplicação (caso não possua, crie), declare as seguintes variáveis:
@@ -48,6 +47,15 @@ use O4l3x4ndr3\SdkIugu\Context\Patient;
 # Definindo o token e ambiente... 
 $config = new Configuration('***api_token***');
 ```
+
+## Testar
+
+Para utilizar os arquivos de exemplos, edite o arquivo `_config.php,` localizado na pasta `samples/context`, e substitua o valor da variável `$api_key` para o valor da sua chave de integração com a api. Após isso, rode o PHP Server na sua máquina local (ou container Docker), utilizando o seguinte comando:
+
+```
+php -S localhost:3333 -t samples
+```
+
 ## Contextos da API
 
 As classes de contextos são constituídas por métodos de consumo da API e possuem suporte a ```namespace``` do PHP,
@@ -94,4 +102,3 @@ possuam.
 
 Caso deseja contribuir para melhorar e manter esse pacote envie e-mail para alexandre@2plug.com.br e solicite acesso ao
 repositório informando o seu perfil no github.
-

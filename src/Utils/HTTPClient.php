@@ -1,6 +1,6 @@
 <?php
 
-namespace O4l3x4ndr3\SdkIugu\Helpers;
+namespace O4l3x4ndr3\SdkIugu\Utils;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -17,7 +17,7 @@ class HTTPClient
     /**
      * @param Configuration|null $config
      */
-    public function __construct(Configuration $config = null)
+    public function __construct(?Configuration $config = null)
     {
         $this->http_errors = false;
         $this->config = $config ?? new Configuration();

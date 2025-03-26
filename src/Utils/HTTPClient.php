@@ -22,7 +22,7 @@ class HTTPClient
         $this->http_errors = false;
         $this->config = $config ?? new Configuration();
         $this->token = $this->config->getApiToken();
-        $this->header = array_merge($config->getHttpHeader(), [
+        $this->header = array_merge($this->config->getHttpHeader(), [
             "User-Agent" => "SDK-IUGU/1.0",
             "Accept" => "Application/json",
         ]);

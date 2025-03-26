@@ -18,9 +18,9 @@ class Configuration
     private ?string $apiToken;
     private ?array $httpHeader;
 
-    public function __construct(?string $apiToken = null)
+    public function __construct(?string $api_token = null)
     {
-        $this->apiToken = $apiToken ?? $_SERVER['IUGU_API_TOKEN'];
+        $this->apiToken = $api_token ?? $_SERVER['IUGU_API_TOKEN'];
         $this->httpHeader = [];
     }
 

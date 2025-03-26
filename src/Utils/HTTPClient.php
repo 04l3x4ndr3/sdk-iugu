@@ -20,7 +20,7 @@ class HTTPClient
     public function __construct(Configuration $config = null)
     {
         $this->http_errors = false;
-        $this->config = $config;
+        $this->config = $config ?? new Configuration();
         $this->token = $this->config->getApiToken();
         $this->header = array_merge($config->getHttpHeader(), [
             "User-Agent" => "SDK-IUGU/1.0",

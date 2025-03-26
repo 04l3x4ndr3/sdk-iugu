@@ -9,7 +9,7 @@ use O4l3x4ndr3\SdkIugu\Types\Customer;
 
 class Customers extends HTTPClient
 {
-    public function __construct(Configuration $configuration)
+    public function __construct(?Configuration $configuration = null)
     {
         parent::__construct($configuration);
     }

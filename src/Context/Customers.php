@@ -26,7 +26,7 @@ class Customers extends HTTPClient
     public function create(Customer $customer): object
     {
         $endpoint = "/customers";
-        $data = $customer->toArray();
+        $data = array_filter($customer->toArray());
         return $this->call('POST', $endpoint, $data);
     }
 
@@ -43,7 +43,7 @@ class Customers extends HTTPClient
     public function edit(string $id, Customer $customer): object
     {
         $endpoint = "/customers/$id";
-        $data = $customer->toArray();
+        $data = array_filter($customer->toArray());
         return $this->call('PUT', $endpoint, $data);
     }
 
@@ -126,11 +126,11 @@ class Customers extends HTTPClient
     public function create_payment_methods(string $customer_id, string $description, string $token, bool $set_as_default = false): object
     {
         $endpoint = "/customers/$customer_id/payment_methods";
-        $data = [
-            "description" => $description,
-            "token" => $token,
+        $data = array_filter([
+            "description" => trim($description),
+            "token" => trim($token),
             "set_as_default" => $set_as_default
-        ];
+        ]);
         return $this->call('POST', $endpoint, $data);
     }
 
@@ -148,9 +148,9 @@ class Customers extends HTTPClient
     public function edit_payment_methods(string $customer_id, string $method_id, string $description): object
     {
         $endpoint = "/customers/$customer_id/payment_methods/$method_id";
-        $data = [
-            "description" => $description,
-        ];
+        $data = array_filter([
+            "description" => trim($description),
+        ]);
         return $this->call('PUT', $endpoint, $data);
     }
 

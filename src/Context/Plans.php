@@ -24,7 +24,7 @@ class Plans extends HTTPClient
     public function create(Plan $plan): object
     {
         $endpoint = "/plans";
-        $data = $plan->toArray();
+        $data = array_filter($plan->toArray());
         return $this->call('POST', $endpoint, $data);
     }
 
@@ -38,7 +38,7 @@ class Plans extends HTTPClient
     public function edit(string $id, Plan $plan): object
     {
         $endpoint = "/plans/$id";
-        $data = $plan->toArray();
+        $data = array_filter($plan->toArray());
         return $this->call('PUT', $endpoint, $data);
     }
 

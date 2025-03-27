@@ -23,7 +23,7 @@ class Subscriptions extends HTTPClient
     public function create(Subscription $subscription): object
     {
         $endpoint = "/subscriptions";
-        $data = $subscription->toArray();
+        $data = array_filter($subscription->toArray());
         return $this->call('POST', $endpoint, $data);
     }
 
@@ -37,7 +37,7 @@ class Subscriptions extends HTTPClient
     public function edit(string $id, Subscription $subscription): object
     {
         $endpoint = "/subscriptions/$id";
-        $data = $subscription->toArray();
+        $data = array_filter($subscription->toArray());
         return $this->call('PUT', $endpoint, $data);
     }
 
@@ -140,9 +140,9 @@ class Subscriptions extends HTTPClient
     public function change_plan(string $id, string $plan_identifier, ?array $payable_with = null): object
     {
         $endpoint = "/subscriptions/$id/change_plan/$plan_identifier";
-        $data = [
+        $data = array_filter([
             'payable_with' => $payable_with,
-        ];
+        ]);
         return $this->call('POST', $endpoint, $data);
     }
 
@@ -169,9 +169,9 @@ class Subscriptions extends HTTPClient
     public function add_credits(string $id, int $quantity): object
     {
         $endpoint = "/subscriptions/$id/add_credits";
-        $data = [
+        $data = array_filter([
             'quantity' => $quantity
-        ];
+        ]);
         return $this->call('PUT', $endpoint, $data);
     }
 
@@ -185,9 +185,9 @@ class Subscriptions extends HTTPClient
     public function remove_credits(string $id, int $quantity): object
     {
         $endpoint = "/subscriptions/$id/remove_credits";
-        $data = [
+        $data = array_filter([
             'quantity' => $quantity
-        ];
+        ]);
         return $this->call('PUT', $endpoint, $data);
     }
 }

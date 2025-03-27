@@ -10,10 +10,15 @@ Os arquivos estão organizados por diretórios conforme abaixo:
 ```
 |+-- Context
 |    +-- Customers.php
+|    +-- Invoices.php
 |    +-- Plans.php
 |    +-- Subscriptions.php
 |+-- Types
+|    +-- Address.php
 |    +-- Customer.php
+|    +-- Invoice.php
+|    +-- InvoiceItem.php
+|    +-- Payer.php
 |    +-- Plain.php
 |    +-- PlainFeature.php
 |    +-- SplitRule.php

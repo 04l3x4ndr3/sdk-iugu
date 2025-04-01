@@ -10,10 +10,10 @@ class Invoice
     private ?bool $ensure_workday_due_date;
     private ?string $expires_in;
     private ?string $bank_slip_extra_due;
-    private ?InvoiceItem $items;
+    private ?array $items;
     private ?array $payable_with;
     private ?Payer $payer;
-    private ?SplitRule $splits;
+    private ?array $splits;
     private ?string $customer_id;
     private ?string $subscription_id;
     private ?string $return_url;
@@ -44,9 +44,9 @@ class Invoice
     /**
      * @param string|null $due_date
      * @param string|null $email
-     * @param InvoiceItem|null $items
+     * @param array|null $items
      */
-    public function __construct(?string $due_date, ?string $email, ?InvoiceItem $items)
+    public function __construct(?string $due_date = null, ?string $email = null, ?array $items = null)
     {
         $this->due_date = $due_date;
         $this->email = $email;
@@ -157,9 +157,9 @@ class Invoice
         return $this->items;
     }
 
-    public function setItems(?InvoiceItem $items): Invoice
+    public function addItems(InvoiceItem $items): Invoice
     {
-        $this->items = $items;
+        $this->items[] = $items;
         return $this;
     }
 
@@ -190,9 +190,9 @@ class Invoice
         return $this->splits;
     }
 
-    public function setSplits(?SplitRule $splits): Invoice
+    public function addSplits(SplitRule $splits): Invoice
     {
-        $this->splits = $splits;
+        $this->splits[] = $splits;
         return $this;
     }
 
@@ -485,16 +485,21 @@ class Invoice
     public function toArray(): array
     {
         $arr = get_object_vars($this);
-        if (isset($arr['items'])) {
-            $arr['items'] = $arr['items']->toArray();
-        }
 
         if (isset($arr['payer'])) {
             $arr['payer'] = $arr['payer']->toArray();
         }
 
         if (isset($arr['splits'])) {
-            $arr['splits'] = $arr['splits']->toArray();
+            foreach ($arr['splits'] as $key => $item) {
+                $arr['splits'][$key] = $item->toArray();
+            }
+        }
+
+        if (isset($arr['items'])) {
+            foreach ($arr['items'] as $key => $item) {
+                $arr['items'][$key] = $item->toArray();
+            }
         }
 
         return $arr;
